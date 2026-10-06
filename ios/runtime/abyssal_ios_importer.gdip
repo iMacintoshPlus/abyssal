@@ -1,0 +1,9 @@
+[config]
+name="AbyssalIOSImporter"
+binary="AbyssalIOSImporter.xcframework"
+initialization="abyssal_ios_importer_init"
+deinitialization="abyssal_ios_importer_deinit"
+
+[dependencies]
+system=["Foundation.framework", "UIKit.framework", "UniformTypeIdentifiers.framework", "WebKit.framework"]
+linker_flags=["-ObjC"]

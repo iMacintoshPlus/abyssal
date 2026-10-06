@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-eval' 'wasm-unsafe-eval'; connect-src 'self'; style-src 'unsafe-inline';">
+  <title>Preparing DEEP content</title>
+  <style>
+    :root { color-scheme: dark; font: -apple-system-body; background: #071b29; color: #d6e8ee; }
+    body { box-sizing: border-box; min-height: 100vh; margin: 0; padding: max(28px, env(safe-area-inset-top)) 24px max(24px, env(safe-area-inset-bottom)); display: grid; place-items: center; }
+    main { width: min(100%, 520px); text-align: center; }
+    h1 { font-size: 25px; font-weight: 600; color: #8bd6ee; }
+    #status { min-height: 3em; font-size: 18px; line-height: 1.45; }
+    button { margin-top: 28px; min-height: 48px; padding: 0 24px; border: 1px solid #409bbd; border-radius: 8px; background: #102c3b; color: #d6e8ee; font-size: 17px; }
+  </style>
+</head>
+<body>
+  <main><h1>Preparing your DEEP content</h1><p id="status" aria-live="polite">Starting the offline importer…</p><button id="cancel" type="button">Cancel import</button></main>
+  <script src="bootstrap.js"></script>
+</body>
+</html>

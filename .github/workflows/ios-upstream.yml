@@ -1,0 +1,84 @@
+name: Review upstream iOS release
+on:
+  workflow_dispatch:
+    inputs:
+      update_upstream:
+        description: Prepare the latest upstream release for review (off builds the current main branch)
+        type: boolean
+        default: true
+concurrency:
+  group: ios-upstream-release
+  cancel-in-progress: false
+permissions:
+  contents: read
+jobs:
+  prepare:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+      pull-requests: write
+    outputs:
+      sha: ${{ steps.candidate.outputs.sha }}
+      tag: ${{ steps.candidate.outputs.tag }}
+      branch: ${{ steps.candidate.outputs.branch }}
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          ref: main
+          fetch-depth: 0
+      - id: candidate
+        env:
+          GH_TOKEN: ${{ github.token }}
+          UPDATE_UPSTREAM: ${{ inputs.update_upstream }}
+        run: python3 ios/upstream_candidate.py
+  build:
+    needs: prepare
+    runs-on: macos-15
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          ref: ${{ needs.prepare.outputs.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: '3.12'
+      - name: Select Xcode 26.3
+        run: echo "DEVELOPER_DIR=/Applications/Xcode_26.3.app/Contents/Developer" >> "$GITHUB_ENV"
+      - name: Download verified tools
+        run: python3 ios/ci_tools.py
+      - name: Install SCons
+        run: python3 -m pip install scons==4.9.1
+      - name: Build native importer
+        run: python3 ios/build_plugin.py --godot-source ios/build/ci-tools/godot-source
+      - name: Export Xcode and build unsigned IPA
+        run: python3 ios/build_ipa.py --godot ios/build/ci-tools/Godot.app/Contents/MacOS/Godot --template ios/build/ci-tools/ios.zip
+      - name: Checksum
+        run: cd ios/build/dist && shasum -a 256 Abyssal-iOS-unsigned.ipa > SHA256SUMS
+      - uses: actions/upload-artifact@v7.0.1
+        with:
+          name: ios-candidate
+          path: ios/build/dist/
+          if-no-files-found: error
+          retention-days: 30
+  draft:
+    needs: [prepare, build]
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v8.0.1
+        with:
+          name: ios-candidate
+          path: ios/build/dist
+      - name: Create draft for manual testing and publication
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          UPSTREAM_TAG: ${{ needs.prepare.outputs.tag }}
+          CANDIDATE_SHA: ${{ needs.prepare.outputs.sha }}
+          CANDIDATE_BRANCH: ${{ needs.prepare.outputs.branch }}
+        shell: bash
+        run: |
+          printf '%s\n' "Unsigned iOS build for upstream $UPSTREAM_TAG." "" "Test this IPA before publishing. If $CANDIDATE_BRANCH is a review branch, merge its PR into main before publication." "" "iOS 14.0 minimum (iOS 14 compatibility unverified). Sign with a sideloading tool. Import your own supported DEEP JAR on first launch. Uses the Abyssal name/icon. No original game content or signing credentials are included." > notes.md
+          gh release create "${UPSTREAM_TAG}-ios-candidate-${GITHUB_RUN_NUMBER}" ios/build/dist/* --target "$CANDIDATE_SHA" --title "Abyssal iOS — $UPSTREAM_TAG" --notes-file notes.md --draft --prerelease
