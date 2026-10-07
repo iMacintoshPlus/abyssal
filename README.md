@@ -28,7 +28,7 @@ For more information, please refer to the original [README](https://github.com/T
 
 | Platform | Download | Start |
 | --- | --- | --- |
-| iOS 14.0+ | `Abyssal-iOS-unsigned.ipa` | Sideload the IPA, then open `Abyssal`. |
+| iOS 14.0+ | `…-ios.ipa` | Sideload the IPA, then open `Abyssal`. |
 
 1. Launch the application.
 2. Choose your *DEEP* JAR when asked; its filename does not matter.
