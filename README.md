@@ -34,7 +34,7 @@ For more information, please refer to the original [README](https://github.com/T
 2. Choose your *DEEP* JAR when asked; its filename does not matter.
 3. Wait for the first conversion to finish before closing the app.
 
-The app was compiled with the iOS 26.2 SDK and supports 14.0 and later, but compatibility is only currently verified on 18.7.8 (iPhone 14 Pro). It uses the native Metal renderer (with OpenGL ES 3 as a fallback) and requests no network or broad storage permissions. Later IPA updates preserve content and saves; uninstalling removes them.
+The app was compiled with the iOS 26.2 SDK and supports 14.0 and later, but compatibility is only currently verified on 18.7.8 (iPhone 14 Pro) and the 26.3.1 simulator. It uses the native Metal renderer (with OpenGL ES 3 as a fallback) and requests no network or broad storage permissions. Later IPA updates preserve content and saves; uninstalling removes them.
 
 You do not need Godot, Python, Java, Node.js or a compiler, and the bundled converter runs completely offline. Choose your JAR from the system file picker and keep the app open until conversion finishes. Your JAR never leaves your device. The game remembers imported content and station checkpoints in your user storage, so you only import once.
 
