@@ -24,11 +24,11 @@ For more information, please refer to the original [README](https://github.com/T
 
 ## Install and Play
 
-**Download the latest IPA from [here](https://github.com/iMacintoshPlus/galaxian/releases/latest) and install using your preferred sideloading method. AltStore/SideStore/LiveContainer users can add `https://raw.githubusercontent.com/iMacintoshPlus/altstore-source/main/source.json` as a source.**
-
 | Platform | Download | Start |
 | --- | --- | --- |
 | iOS 14.0+ | `…-ios.ipa` | Sideload the IPA, then open `Abyssal`. |
+
+**Download the latest IPA from [here](https://github.com/iMacintoshPlus/galaxian/releases/latest) and install using your preferred sideloading method. AltStore/SideStore/LiveContainer users can add `https://raw.githubusercontent.com/iMacintoshPlus/altstore-source/main/source.json` as a source.**
 
 1. Launch the application.
 2. Choose your *DEEP* JAR when asked; its filename does not matter.
@@ -40,7 +40,7 @@ You do not need Godot, Python, Java, Node.js or a compiler, and the bundled conv
 
 ### Which DEEP Builds Work?
 
-The engine is developed against the **Sony Ericsson release of DEEP 1.0.8**, identified by SHA-256: `a247f8a872dda268ed8138086bd0de6d038d7faf7ef31469b0efe3eb54209d26`
+The engine is developed against the **Sony Ericsson release of *DEEP* 1.0.8**, identified by SHA-256: `a247f8a872dda268ed8138086bd0de6d038d7faf7ef31469b0efe3eb54209d26`
 
 That is the build all gameplay checking is done on. It is not a requirement. Any DEEP MIDlet JAR is accepted, and the importer converts it whenever the build stores its data the way the engine expects. Localised builds are supported: the language shipped in the JAR is the language you play in.
 
