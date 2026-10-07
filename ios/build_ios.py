@@ -16,8 +16,6 @@ parser.add_argument("--godot", type=Path, default=Path("/Applications/Godot.app/
 parser.add_argument("--template", type=Path, required=True, help="Official matching ios.zip from Godot export templates")
 parser.add_argument("--output", type=Path, default=ROOT / "ios/build/export")
 parser.add_argument("--version", help="Release version; defaults to this checkout's upstream validation document")
-parser.add_argument("--renderer", choices=("compatibility", "mobile-metal"), default="mobile-metal",
-                    help="Mobile + Metal matches upstream Android; use compatibility for simulator exports")
 parser.add_argument("--simulator-library", type=Path,
                     help="Optional arm64 simulator libgodot.a built from matching Godot sources")
 args = parser.parse_args()
@@ -50,15 +48,6 @@ project_text = re.sub(r'^window/handheld/orientation=.*\n?', '', project_text, f
 project_text = project_text.replace("[display]\n", '[autoload]\n\nAbyssalIOSPlatform="*res://ios/platform.gd"\n\n[display]\n', 1)
 project_text = project_text.replace('[display]\n', '[display]\nwindow/handheld/orientation=4\n', 1)
 project_text = project_text.replace("[rendering]\n", "[rendering]\ntextures/vram_compression/import_etc2_astc=true\n", 1)
-if args.renderer == "mobile-metal":
-    # Match upstream Android's Mobile renderer, using Apple's native driver.
-    # These changes belong only to the disposable iOS export copy.
-    anchor = 'renderer/rendering_method.mobile="gl_compatibility"'
-    if project_text.count(anchor) != 1:
-        raise SystemExit("Upstream mobile renderer setting changed; review the iOS renderer override.")
-    project_text = project_text.replace(anchor, 'renderer/rendering_method.mobile="mobile"', 1)
-    project_text = re.sub(r'^rendering_device/driver\.ios=.*\n?', '', project_text, flags=re.MULTILINE)
-    project_text = project_text.replace('[rendering]\n', '[rendering]\nrendering_device/driver.ios="metal"\n', 1)
 project_file.write_text(project_text)
 template_path = str(template).replace("\\", "\\\\").replace('"', '\\"')
 preset = (ROOT / "ios/export_presets.cfg").read_text()
