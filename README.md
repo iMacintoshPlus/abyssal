@@ -38,11 +38,11 @@ The app was compiled with the iOS 26.2 SDK and supports 14.0 and later, but comp
 
 You do not need Godot, Python, Java, Node.js or a compiler, and the bundled converter runs completely offline. Choose your JAR from the system file picker and keep the app open until conversion finishes. Your JAR never leaves your device. The game remembers imported content and station checkpoints in your user storage, so you only import once.
 
-### Which DEEP Builds Work?
+### Which *DEEP* Builds Work?
 
 The engine is developed against the **Sony Ericsson release of *DEEP* 1.0.8**, identified by SHA-256: `a247f8a872dda268ed8138086bd0de6d038d7faf7ef31469b0efe3eb54209d26`
 
-That is the build all gameplay checking is done on. It is not a requirement. Any DEEP MIDlet JAR is accepted, and the importer converts it whenever the build stores its data the way the engine expects. Localised builds are supported: the language shipped in the JAR is the language you play in.
+That is the build all gameplay checking is done on. It is not a requirement. Any *DEEP* MIDlet JAR is accepted, and the importer converts it whenever the build stores its data the way the engine expects. Localised builds are supported: the language shipped in the JAR is the language you play in.
 
 The engine's own menus, settings and messages follow the game's language when the engine has it, and otherwise the system language. Settings → Display → Language picks one by hand. The engine text is available in English, Russian, Ukrainian, German, French, Spanish, Brazilian Portuguese, Italian, Polish, Turkish, Indonesian, Vietnamese, Simplified Chinese, Japanese and Korean. The story, ship and item names always come from the JAR.
 
@@ -85,6 +85,6 @@ This project is an unofficial fork containing AI-assisted changes and is not aff
 
 The importer recognizes compatible JAR structure, computes a SHA-256 identity for isolated caches, then decodes its resource entries and reads class-file data tables with a **restricted bytecode evaluator**. That evaluator reads literal assignments, arrays, arithmetic and bounded control flow, resolving calls only through explicit inert data summaries; unsupported opcodes fail. It never loads or invokes original classes in a JVM, and no original bytecode or method body is written to its output. It does, however, inspect and evaluate parts of original method bodies. Because some content is derived that way, this is reverse engineering and **not** a clean-room reimplementation. Decoded models, textures, audio, catalogue rows and narrative records exist only in your own local cache - none are distributed here.
 
-This engine's own source is licensed under the [Apache License 2.0](LICENSE.md). That covers the code in this repository and nothing else. It grants you no rights to the original DEEP game by FISHLABS, its JAR, its class files or anything converted from them; those are not this project's to license and are not distributed here. The three vendored decoder files keep their own Apache-2.0 notices, listed in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+This engine's own source is licensed under the [Apache License 2.0](LICENSE.md). That covers the code in this repository and nothing else. It grants you no rights to the original *DEEP* game by FISHLABS, its JAR, its class files or anything converted from them; those are not this project's to license and are not distributed here. The three vendored decoder files keep their own Apache-2.0 notices, listed in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
 Content you convert is private. Do not redistribute it with the engine, and never share the JAR, a converted pack or a conversion cache. The name is a working title, not a trademark claim. Menus and instrument frames are drawn in code; original logos, portraits and icons are loaded locally from your own import.
